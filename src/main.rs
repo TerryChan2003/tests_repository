@@ -1,17 +1,19 @@
 #[warn(dead_code)]
 use std::io;
+use std::string::String;
+use std::string::ToString;
 
 fn input<T>(text: T) -> String 
-    where T: std::string::ToString
+    where T: ToString
 {
     println!("{}", text.to_string());
     let mut buf = String::new();
     io::stdin().read_line(&mut buf).unwrap();
-    buf
+    buf.trim().to_string()
 }
 
 fn main() {
-    println!("Hello, world!");
-    let s = input("Your word: ");
-    println!("{}", s)
+    let s = input("Выпишите число: ");
+    let s : u32 = s.parse().unwrap(); 
+    println!("Ваше введенное число в квадрате {}", s*s);
 }
