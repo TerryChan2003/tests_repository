@@ -2,12 +2,18 @@
 extern crate reqwest;
 
 use std::io;
-use std::string::String;
-use std::string::ToString;
-fn http_get<T>(url: T) -> String
-    where T: reqwest::IntoUrl
+use std::collections::HashMap;
+fn http_get(url: &str, params: HashMap<&str, &str>) -> String
 {
-    let mut req = reqwest::get(url).unwrap();
+    let mut param = String::new();
+    param.push_str(url);
+    param.push_str("?");
+    for (k, v) in params.iter() {
+        param.push_str(k);
+        param.push_str("=");
+        param.push_str(v);
+    }
+    let mut req = reqwest::get(&param).unwrap();
     req.text().unwrap()
 }
 
@@ -21,7 +27,9 @@ fn input<T>(text: T) -> String
 }
 
 fn main() {
-    let t = http_get("http://httpbin.org/get");
+    let mut map = HashMap::new();
+    map.insert("key", "value");
+    let t = http_get("http://httpbin.org/get", map);
     println!("Result: {}", t);
     let _t = input("Click enter for close...");
 }
