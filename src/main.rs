@@ -12,7 +12,9 @@ fn http_get(url: &str, params: HashMap<&str, &str>) -> String
         param.push_str(k);
         param.push_str("=");
         param.push_str(v);
+        param.push_str("&")
     }
+    param.remove(param.len()-1);
     let mut req = reqwest::get(&param).unwrap();
     req.text().unwrap()
 }
@@ -28,7 +30,8 @@ fn input<T>(text: T) -> String
 
 fn main() {
     let mut map = HashMap::new();
-    map.insert("key", "value");
+    map.insert("login", "testing");
+    map.insert("password", "12345");
     let t = http_get("http://httpbin.org/get", map);
     println!("Result: {}", t);
     let _t = input("Click enter for close...");
