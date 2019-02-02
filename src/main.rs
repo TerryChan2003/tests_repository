@@ -43,14 +43,20 @@ fn input<T>(text: T) -> String
     io::stdin().read_line(&mut buf).unwrap();
     buf.trim().to_string()
 }
-
+// testing function
 fn main() {
+    
+    // testing http_get
     let mut map = HashMap::new();
     map.insert("login", "testing");
     map.insert("password", "12345");
     let t = http_get("http://httpbin.org/get", map);
     println!("Result http: {}", t);
+    
+    // testing get_json_data
     let t = get_json_data("login.json");
     println!("Result reader: {}", t);
+
+    // exit
     let _t = input("Click enter for close...");
 }
